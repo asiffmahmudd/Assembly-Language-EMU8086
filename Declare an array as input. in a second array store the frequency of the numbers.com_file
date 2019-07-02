@@ -1,0 +1,18 @@
+	org 100h
+
+	mov bx, offset arr1
+	mov cx, 10
+
+	frequency:
+		mov si, offset arr2
+		mov al, [bx] 
+		mov ah, 0
+		inc bx
+		add si, ax
+		inc [si]
+		loop frequency
+
+	ret
+
+	arr1 db 7,6,5,4,7,6,6,8,3,10
+	arr2 db 11 dup(0)

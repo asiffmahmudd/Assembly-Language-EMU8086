@@ -1,0 +1,54 @@
+	org 100h
+
+	mov bl, 0dh
+	mov si, offset arr
+	mov di, offset arr   
+
+	input: 
+	mov ah,1
+	int 21h
+	cmp al, bl
+	je endl
+
+	mov [si], al
+	inc si
+
+	jmp input 
+
+	endl:     
+
+	mov ah,2
+	mov dl,0dh
+	int 21h
+	mov dl,0ah
+	int 21h  
+	jmp check2
+
+	check1:
+	inc di
+	
+	check2:
+	mov bh, [di]
+	cmp bh, 0*00
+	je exit
+	mov cl, 41h
+	cmp [di], cl
+	jl check1 
+
+	mov cl, 5Ah
+	cmp [di], cl
+	jg check1
+
+
+
+	print: 
+	mov dl, [di]
+	int 21h
+	inc di
+	jmp check2
+
+	exit:
+
+	ret
+	   
+	arr db 100 dup(?)

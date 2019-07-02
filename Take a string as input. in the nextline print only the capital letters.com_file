@@ -1,0 +1,50 @@
+	org 100h
+
+	mov bl, 0dh
+	mov si, offset arr
+	mov di, offset arr   
+
+	input: 
+	mov ah,1
+	int 21h
+	cmp al, bl
+	je endl
+
+	mov [si], al
+	inc si
+
+	jmp input 
+
+	endl:     
+
+	mov ah,2
+	mov dl,0dh
+	int 21h
+	mov dl,0ah
+	int 21h
+
+	mov cl, 'a'
+
+	print2:
+	inc di
+
+	print:
+
+	mov bh, [di]
+	cmp bh, 0*00
+	je exit
+
+	cmp bh,cl
+	jl print2
+	  
+
+	mov dl, [di]
+	int 21h
+	inc di
+	jmp print
+
+	exit:
+
+	ret
+	   
+	arr db 10 dup(?)

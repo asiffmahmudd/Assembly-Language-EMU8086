@@ -1,0 +1,21 @@
+	org 100h
+	
+	mov bl, 0dh
+	mov si, offset arr
+
+	input: 
+	mov ah,1
+	int 21h
+	cmp al, bl
+	je endl
+
+	mov [si], al
+	inc si
+
+	jmp input
+
+	endl:
+
+	ret
+	   
+	arr db 100 dup(?)

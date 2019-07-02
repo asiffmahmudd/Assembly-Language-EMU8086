@@ -1,0 +1,85 @@
+	org 100h
+
+	mov dl, 0Dh
+	mov di, offset arr1
+	mov si, offset arr2
+
+	input1: 
+		mov ah,1
+		int 21h 
+		cmp al, dl
+		je exit1
+		mov [di], al
+		inc di
+		jmp input1
+
+	exit1:
+
+	mov ah,2
+	mov dl,0dh
+	int 21h
+	mov dl,0ah
+	int 21h
+		
+	input2:
+		mov ah,1
+		int 21h
+		cmp al, 41h
+		jge check
+
+	check:
+		cmp al, 5Ah
+		jle exit2
+		mov [si], al
+		inc si
+		jmp input2
+			
+	exit2:
+
+	mov bx, offset arr3
+	mov di, offset arr1
+	mov si, offset arr2
+
+	concatenate1:
+		mov cl, [di]
+		mov ch, 0
+		cmp cx, 0*00
+		je concatenate2
+		inc di
+		mov [bx], cx
+		inc bx
+		jmp concatenate1
+		
+	concatenate2:
+		mov cl, [si]
+		mov ch, 0
+		cmp cx, 0*00
+		je exit3
+		inc si
+		mov [bx], cx
+		inc bx
+		jmp concatenate2
+		
+	exit3:       
+
+	mov ah,2
+	mov dl,0dh
+	int 21h
+	mov dl,0ah
+	int 21h
+
+	mov bx, offset arr3
+	mov cx, 20
+
+	print:
+		mov ah,2h
+		mov dl, [bx]
+		int 21h
+		inc bx
+		loop print
+		
+	ret
+
+	arr1 db 200 dup(?)
+	arr2 db 200 dup(?)
+	arr3 db 200 dup(?)
